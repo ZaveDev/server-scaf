@@ -1,21 +1,20 @@
-
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
-  const token = req.headers.authorization
-  const secret = process.env.JWT_SECRET || "is it secret, is it safe?"
+  const token = req.headers.authorization;
+  const secret = process.env.JWT_SECRET || "is it secret, is it safe?";
 
   if (token) {
     jwt.verify(token, secret, (err, decodedToken) => {
       if (err) {
-        res.status(401).json({ message: "Not Allowed" })
+        res.status(401).json({ message: "Not Allowed" });
       } else {
-        req.jwt = decodedToken
+        req.jwt = decodedToken;
 
-        next()
+        next();
       }
-    })
+    });
   } else {
-    res.status(401).json({ message: "No token!" })
+    res.status(401).json({ message: "No token!" });
   }
-}
+};
